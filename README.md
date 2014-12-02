@@ -47,6 +47,12 @@ in the program to read how to use it. Then open up the config.yml file to set wh
 
 In the config.yml file, 'internal structure' just asks whether all the other directories are still in the base directory. If so, they can be specified relative to the directory. If you disable this option, absolute paths should be provided.
 
+For Windows, as an example configuration of viewing images:
+> rundll32 %ProgramFiles%/Windows Photo Viewer/PhotoViewer.dll, ImageView_Fullscreen
+
+For music/video, I have not found a player I like which accepts shortcuts by the command line, so no
+examples there.
+
 ### Requirements
 
 - Ruby 1.9 or greater
