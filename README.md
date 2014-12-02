@@ -7,7 +7,7 @@ Features include:
 * laziest programmed tab-completion that still mostly works 
 * the ability to provide synonyms and ignored words for more pleasing english grammar but no extra functionality
 * file safety assuming you don't close the program while updating. But who would do that.
-* written by a terrible programmer, so the code is probably simple.
+* written by a terrible programmer, so the code is probably simple. (Feedback is welcome however)
 
 ### Sample Usage
 
@@ -55,4 +55,4 @@ In the config.yml file, 'internal structure' just asks whether all the other dir
 > Gems:
 - sqlite3
 - curses
-- windows32 shortcut (if windows)
+- win32-shortcut (if windows)
