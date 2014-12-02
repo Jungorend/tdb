@@ -11,33 +11,33 @@ Features include:
 
 ### Sample Usage
 
-> Let's assume you use this for pictures. Example query and potential relevant tags:
+Let's assume you use this for pictures. Example query and potential relevant tags:
 ```
- > only frank at kanazawa eating pizza or frank with others cycling in Munich
+ only frank at kanazawa eating pizza or frank with others cycling in Munich
 ```
 This would create shortcuts to all the pictures in the database that met one of these two requirements in a random order. It then starts the appropriate media viewer on the first image allowing them to be viewed.
 Here's a breakdown:
 
-#### hypothetical tags:
-- Frank, of type friend
-- Kanazawa of type city
-- eat, cycle of type action
-- pizza, of type points_of_interest
+#### Hypothetical Tags:
+- Frank of type *friend*
+- Kanazawa of type *city*
+- eat cycle of type *action*
+- pizza of type *points_of_interest*
 
-The program reads in these tags and finds all images that match the combination we see. If a picture matches all the criteria, its included.
+The program reads in these tags and finds all images that match the combination we see. If a picture matches all the criteria, it is included.
 
-only and others are keywords that exclude or require that more than one tag of the same type be in the picture. So 'only frank' ensures that no pictures will be included that have others in type 'friend'.
+*only* and others are keywords that exclude or require that more than one tag of the same type be in the picture. So 'only frank' ensures that no pictures will be included that have others in type *friend*.
 
 #### ignored words:
--at
--with
--in
+- at
+- with
+- in
 
-would be included in the ignored_english table of the database. This means that they would be ignored by the program and included for fluff.
+would be included in the *ignored_english* table of the database. This means that they would be ignored by the program and included for fluff.
 
 Likewise, there would be two records for cycling and eating which link back to our base tags of eat and cycle, allowing us to type whichever feels more convenient at the time.
 
-Both the ignored_words and parsed_words records don't yet have a way to be modified from the program. You must use sqlite to add entries. Sorry. :(
+Both the *ignored_words* and *parsed_words* records don't yet have a way to be modified from the program. You must use sqlite to add entries. Sorry. :(
 
 Honestly, I recommend typing
 ```
@@ -51,7 +51,8 @@ In the config.yml file, 'internal structure' just asks whether all the other dir
 
 - Ruby 1.9 or greater
 - sqlite3
+
 > Gems:
 - sqlite3
 - curses
-- windows shortcut (if windows)
+- windows32 shortcut (if windows)
