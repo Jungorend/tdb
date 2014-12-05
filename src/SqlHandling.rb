@@ -47,17 +47,13 @@ module SqlHandling
   end
 
   def self.generate_files(filenames)
-    delete_watch_directory
+    Configuration.clear_output_directory
     filenames.shuffle!
     filenames.each_with_index do |x, index|
       x = x.to_s[2..-3]
       Configuration.create_shortcut("#{@config["database directory"]}/#{x}", "#{@config["output directory"]}/#{index}")
     end
     return filenames[0]
-  end
-
-  def self.delete_watch_directory
-    FileUtils.rm_rf(Dir.glob("#{@config["output directory"]}/*"))
   end
 
   # This section is for selecting files

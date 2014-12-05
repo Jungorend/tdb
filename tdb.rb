@@ -19,7 +19,7 @@ Input.init do
     input.chomp!
     case input
       when /^[qQ]$/
-        SqlHandling.delete_watch_directory
+        Configuration.clear_output_directory
         exit
       when /^[rR] (\d+) (\d+)$/
         SqlHandling.random_selection($1.to_i, $2.to_i)

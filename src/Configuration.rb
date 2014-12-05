@@ -17,7 +17,7 @@ module Configuration
   end
 
   if @configuration["windows"]
-    require_relative 'FileHandling'
+    require_relative 'FileHandler'
   end
 
   def self.config
@@ -26,7 +26,8 @@ module Configuration
 
   def self.create_shortcut(source, destination)
     if @configuration["windows"]
-      FileHandling.create_shortcut(source, destination)
+      destination_link = destination + ".lnk"
+      FileHandler.create_shortcut(source, destination_link)
     else
       File.symlink(source, destination)
     end
@@ -42,16 +43,15 @@ module Configuration
     SqlHandling.generate_files(a)
   end
 
-  def self.view_media(a)
-    Configuration.listen_to_music(a)
+  def self.clear_output_directory
+    FileUtils::rm_rf Dir.glob("#{@configuration["output directory"]}/*")
   end
 
-
-  def self.listen_to_music(music)
-    Configuration.generate_files(music).to_s[2..-3].split(".")[-1]
+  def self.view_media(a)
+    Configuration.generate_files(a).to_s[2..-3].split(".")[-1]
     first_to_view = "0.lnk"
-    if @windows 
-      command = "\"#{@configuration["media viewer"]}\" #{@configuration["output directory"]}/0.lnk"
+    if @configuration["windows"]
+      command = "#{@configuration["media viewer"]} #{@configuration["output directory"]}/0.lnk"
       command.gsub!(/\//, "\\")
     else
       command = "#{@configuration["media viewer"]} #{@configuration["output directory"]}/0"

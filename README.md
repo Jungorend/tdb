@@ -45,10 +45,41 @@ Honestly, I recommend typing
 ```
 in the program to read how to use it. Then open up the config.yml file to set where you want everything. For example, on windows, you don't want to use eye of gnome, so you may want to set the media viewer to your prefered media viewer.
 
-In the config.yml file, 'internal structure' just asks whether all the other directories are still in the base directory. If so, they can be specified relative to the directory. If you disable this option, absolute paths should be provided.
+### Configuration File Explanation
+> Explanation of the options:
+- windows: true or false. Otherwise, linux is assumed. Affects the file endings and dividers.
+- internal structure: true or false. If false, all directories need to have absolute paths. Otherwise this assumes they are within the base directory
+- media viewer: What to run the media against. Music player, video player, image viewer...
+- output directory: This is where the results of a query are stored
+- database directory: All files contained in the database are stored here
+- database location: This is the actual database file. If none exists, it will create one the first time the program is run.
+- new files: This is the directory to put new files in that you wish to add to the database.
 
-For Windows, as an example configuration of viewing images:
-> rundll32 %ProgramFiles%/Windows Photo Viewer/PhotoViewer.dll, ImageView_Fullscreen
+#### Windows Example Configuration File:
+```
+---
+windows: true
+base directory: C:/Users/Jungy/Desktop/tdb
+internal structure: true
+media viewer: rundll32 "%ProgramFiles%/Windows Photo Viewer/PhotoViewer.dll", ImageView_Fullscreen
+output directory: watch
+database directory: db
+database location: database.db
+new files: sort
+```
+
+#### Ubuntu Example Configuration File:
+```
+---
+windows: false
+base directory: /home/Jungy/tdb
+internal structure: true
+media viewer: eog
+output directory: watch
+database directory: db
+database location: database.db
+new files: sort
+```
 
 For music/video, I have not found a player I like which accepts shortcuts by the command line, so no
 examples there.
