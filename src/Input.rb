@@ -4,7 +4,7 @@ require 'curses'
 module Input
   def self.init
     @x, @y = 0 ,0
-    @message=">"
+    @message='>'
     Curses.noecho
     Curses.cbreak
     Curses.curs_set(0)
@@ -19,24 +19,24 @@ module Input
     end
   end
 
-  def self.read_input(message="TDB")
+  def self.read_input(message='TDB')
     pointer = @history.length - 1
-    @message = message + ">"
+    @message = message + '>'
     Curses.addstr("#{@message} ")
-    result = ""
+    result = ''
     until result.include? "\n" or result.include? "\r"
       character = Curses.getch
       if character.ord == 9 # Tab
         word = autocomplete(result.split[-1])
-        result = result.split[0..-2].join(" ")
-        if result == ""
-          if word == ""
-            result = ""
+        result = result.split[0..-2].join(' ')
+        if result == ''
+          if word == ''
+            result = ''
           else
-            result = word + " "
+            result = word + ' '
           end
         else
-          result = result + " " + word + " "
+          result = result + ' ' + word + ' '
         end
       elsif character.ord == 8 or character.ord == 263 # Backspace // 263 is Backspace in the curses.h special function keys
         result.chop!
@@ -54,7 +54,7 @@ module Input
       Curses.clrtoeol
       Curses.setpos(@y, 0)
       string = @message + result
-      string.gsub!(/\s+/, " ")
+      string.gsub!(/\s+/, ' ')
       Curses.addstr(string+"\n")
       @x = string.length
     end
@@ -65,17 +65,17 @@ module Input
 
   def self.autocomplete(result)
     tags = add_to_tags(SqlHandling.get_all_tags)
-    out = ""
+    out = ''
     tags.each do |tag|
       if tag[0] =~ /^#{result}.*/
-        out = tag[0] + " "
+        out = tag[0] + ' '
       end
     end
     out
   end
 
   def self.add_to_tags(tags)
-    tags.concat([["others"],["only"],["not"],['or']]).concat(SqlHandling.provide_special_english)
+    tags.concat([['others'],['only'],['not'],['or']]).concat(SqlHandling.provide_special_english)
   end
 
   def self.print_as_table(values)

@@ -4,17 +4,17 @@ require 'sqlite3'
 
 module SqlHandling
   @config = Configuration.config
-  @convert_dir = Dir.pwd + "/" + "to convert"
-  $table = "filetags"
-  $filename = "filename"
+  @convert_dir = Dir.pwd + '/' + 'to convert'
+  $table = 'filetags'
+  $filename = 'filename'
 
-  unless File.exists? @config["database location"]
+  unless File.exists? @config['database location']
     require_relative 'Initializer'
     Initializer.create_new_database
   end
 
-  $database = SQLite3::Database.new("#{@config["database location"]}")
-  $database.execute("PRAGMA foreign_keys = on")
+  $database = SQLite3::Database.new("#{@config['database location']}")
+  $database.execute('PRAGMA foreign_keys = on')
 
   # The parser variables
   $english_to_delete = Array.new
@@ -22,10 +22,10 @@ module SqlHandling
 
   def self.update_parser
     begin
-      $english_to_delete = $database.execute("SELECT word FROM ignored_english")
+      $english_to_delete = $database.execute('SELECT word FROM ignored_english')
       $english_to_delete.map! { |x| x[0] }
 
-      results = $database.execute("SELECT word, replacement_word FROM parsed_english")
+      results = $database.execute('SELECT word, replacement_word FROM parsed_english')
       results.each do |record|
         $english_to_parse[record[0]] = record[1]
       end
@@ -51,7 +51,7 @@ module SqlHandling
     filenames.shuffle!
     filenames.each_with_index do |x, index|
       x = x.to_s[2..-3]
-      Configuration.create_shortcut("#{@config["database directory"]}/#{x}", "#{@config["output directory"]}/#{index}")
+      Configuration.create_shortcut("#{@config['database directory']}/#{x}", "#{@config['output directory']}/#{index}")
     end
     return filenames[0]
   end
@@ -62,15 +62,15 @@ module SqlHandling
     statement.split.each_with_index.map do |token, index|
       result = token
       
-      if index >= 1 and statement.split[index - 1].casecmp("NOT") == 0
+      if index >= 1 and statement.split[index - 1].casecmp('NOT') == 0
         result = "NOT #{token}"
       end
 
-      if index >= 1 and statement.split[index - 1].casecmp("ONLY") == 0
+      if index >= 1 and statement.split[index - 1].casecmp('ONLY') == 0
         result = "ONLY #{token}"
       end
 
-      if index + 1 < statement.split.length and statement.split[index + 1].casecmp("OTHERS") == 0
+      if index + 1 < statement.split.length and statement.split[index + 1].casecmp('OTHERS') == 0
         result = "OTHERS #{token}"
       end
 
@@ -92,11 +92,11 @@ module SqlHandling
   def self.parse_english(sql_statement)
     tokens = sql_statement.split()
     tokens.delete_if { |token| $english_to_delete.include? token }
-    result = ""
+    result = ''
     while tokens.any?
     token = tokens.shift
       if $english_to_parse.include? token
-        result += $english_to_parse[token] + " "
+        result += $english_to_parse[token] + ' '
       elsif token =~ /^or$/
         result += "#{token} "
       elsif token =~ /[\(\)]/
@@ -124,7 +124,7 @@ module SqlHandling
   end
 
   def self.sqlize(statement)
-    result = ""
+    result = ''
     statement.each do |token|
       
       if token =~/NOT (.*)/
@@ -132,7 +132,7 @@ module SqlHandling
       elsif token =~ /OTHERS (.*)/
         type = get_type($1)
         if type.nil?
-          puts("Unknown tag associated with OTHERS")
+          puts('Unknown tag associated with OTHERS')
           Input.reset
         else
           result << " AND filename IN (SELECT filename FROM filetags WHERE tagname = #{tokenize($1)} AND filename IN (SELECT filename FROM filetags WHERE tagname != #{tokenize($1)} AND type=\"#{type}\"))"
@@ -140,7 +140,7 @@ module SqlHandling
       elsif token =~ /ONLY (.*)/
         type = get_type($1)
         if type.nil?
-          puts "Unknown tag associated with ONLY"
+          puts 'Unknown tag associated with ONLY'
           Input.reset
         else
           result << " AND filename IN (SELECT filename FROM filetags WHERE tagname = #{tokenize($1)} AND filename NOT IN (SELECT filename FROM filetags WHERE tagname != #{tokenize($1)} AND type=\"#{type}\"))"
@@ -149,15 +149,15 @@ module SqlHandling
         result << " AND filename IN (SELECT filename FROM filetags WHERE tagname=#{tokenize(token)})"
       end
     end
-    result.sub(")", "")[18..-1]
+    result.sub(')', '')[18..-1]
   end
 
   def self.make_sql_statement(statement) # merges substatements
-    sql_statement = ""
+    sql_statement = ''
     parse(statement).each do |sub_statement|
       sql_statement << " UNION #{sqlize(sub_statement)}"
     end
-    sql_statement.sub(" UNION ", "")
+    sql_statement.sub(' UNION ', '')
   end
     
 
@@ -191,7 +191,7 @@ module SqlHandling
   end
 
   def self.get_all_tags
-    string = "SELECT * FROM tags"
+    string = 'SELECT * FROM tags'
     begin
       $database.execute(string)
     rescue
@@ -243,7 +243,7 @@ module SqlHandling
   end
 
   def self.insert_to_database(type, tagname, file)
-        puts "Updating..."
+        puts 'Updating...'
         unless file_in_database? file
           insert_into_file_table(file)
         end
@@ -276,7 +276,7 @@ module SqlHandling
       begin
         $database.execute(statement)
       rescue
-        puts "Issue with inserting during update."
+        puts 'Issue with inserting during update.'
         exit
       end
     end
@@ -296,7 +296,7 @@ module SqlHandling
     begin
       $database.execute(statement)
     rescue
-      puts "error with adding new tags"
+      puts 'error with adding new tags'
       exit
     end
   end

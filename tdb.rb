@@ -1,14 +1,14 @@
 #!/usr/bin/ruby
 
-#this will randomize the filenames array
-#and then create the files from the original
-#
+# Main Entry Point to the program. All the options
+# are access through the menu.
 
-require_relative "src/Information"
-require_relative "src/SqlHandling"
-require_relative "src/AlterDatabase"
-require_relative "src/Configuration"
-require_relative "src/Input"
+
+require_relative 'src/Information'
+require_relative 'src/SqlHandling'
+require_relative 'src/AlterDatabase'
+require_relative 'src/Configuration'
+require_relative 'src/Input'
 
 Input.init do
 

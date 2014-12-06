@@ -6,20 +6,20 @@ require_relative 'Configuration'
 module AlterDatabase
   @config = Configuration.config
   @base_dir = Dir.pwd
-  @convert_dir = "to convert"
+  @convert_dir = 'to convert'
 
   def self.command(input)
     case input
-      when "a"
+      when 'a'
         convert_update
-      when "u"
+      when 'u'
         update
       when 'i'
         insert_tags
-      when "d"
+      when 'd'
         delete_from_database
       else
-        puts "Not a valid command, please re-enter"
+        puts 'Not a valid command, please re-enter'
     end
   end
 
@@ -37,15 +37,15 @@ module AlterDatabase
 
   #TODO: Check if still used anywhere
   def self.list_tag
-    input = Input.read_input "Enter the type"
+    input = Input.read_input 'Enter the type'
     character = SqlHandling.show_all_in_field input.chomp!
     Input.print_as_table character
   end
 
   # This allows new characters and similar to be created.
   def self.insert_tags
-    tag = Input.read_input "Please enter the tag"
-    type = Input.read_input "Please enter the type"
+    tag = Input.read_input 'Please enter the tag'
+    type = Input.read_input 'Please enter the type'
     tag.chomp!
     type.chomp!
     SqlHandling.add_tag(tag, type)
@@ -54,7 +54,7 @@ module AlterDatabase
   #This will go through sort and allow you to add tags then add to the database
   def self.update
     files = Dir["#{@config['new files']}/*"]
-    files.map! { |file| file.split("/")[-1]}
+    files.map! { |file| file.split('/')[-1]}
     #We have the filenames now. So for each file we need to add the tags, then
     #we need to copy it to the database and delete the original.
     files.each do |file|
@@ -67,7 +67,7 @@ module AlterDatabase
       array_of_file << file
       array_of_array  << array_of_file
       Configuration.view_media(array_of_array)
-      input = Input.read_input "Enter associated tags"
+      input = Input.read_input 'Enter associated tags'
       input.chomp!
       if input =~ /^q$/
         SqlHandling.remove_files([file])
@@ -82,22 +82,22 @@ module AlterDatabase
 
   def self.gather_tagname_folders(type)
     test = Dir["#{@base_dir}/#{@convert_dir}/#{type}/*"]
-    test.map! { |x| x.split("/")[-1] }
+    test.map! { |x| x.split('/')[-1] }
   end
 
   def self.gather_type_folders
     folder = Dir["#{@base_dir}/#{@convert_dir}/*"]
-    folder.map! { |fol| fol.split("/")[-1] }
+    folder.map! { |fol| fol.split('/')[-1] }
   end
 
   def self.gather_files(folder_name, type)
     files = Dir["#{@base_dir}/#{@convert_dir}/#{type}/#{folder_name}/*"]
-    files.map! { |file| file.split("/")[-1]}
+    files.map! { |file| file.split('/')[-1]}
   end
 
   def self.delete_from_database
     files = Dir["#{@base_dir}/to delete/*"]
-    files.map! { |file| file.split("/")[-1] }
+    files.map! { |file| file.split('/')[-1] }
     puts files
     SqlHandling.remove_files(files)
   end
