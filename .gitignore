@@ -1,3 +1,6 @@
-db/*
-sort/*
-watch/*
+db/
+sort/
+watch/
+*.db
+*.yml
+.idea/

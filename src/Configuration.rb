@@ -17,7 +17,7 @@ module Configuration
   end
 
   if @configuration['windows']
-    require_relative 'FileHandler'
+    require 'win32/shortcut'
   end
 
   def self.config
@@ -26,8 +26,10 @@ module Configuration
 
   def self.create_shortcut(source, destination)
     if @configuration['windows']
-      destination_link = destination + '.lnk'
-      FileHandler.create_shortcut(source, destination_link)
+      Shortcut.new(destination + '.lnk') do |s|
+        s.path = source
+        s.show_cmd = Shortcut::SHOWNORMAL
+      end
     else
       File.symlink(source, destination)
     end
@@ -49,7 +51,6 @@ module Configuration
 
   def self.view_media(a)
     Configuration.generate_files(a).to_s[2..-3].split('.')[-1]
-    first_to_view = '0.lnk'
     if @configuration['windows']
       command = "#{@configuration['media viewer']} #{@configuration['output directory']}/0.lnk"
       command.gsub!(/\//, "\\")

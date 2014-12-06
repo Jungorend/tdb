@@ -63,6 +63,12 @@ module Input
     result
   end
 
+  def self.puts(message)
+    Curses.addstr(message + "\n")
+    @y += 1
+    @x = 0
+  end
+
   def self.autocomplete(result)
     tags = add_to_tags(SqlHandling.get_all_tags)
     out = ''

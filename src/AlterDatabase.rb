@@ -19,7 +19,7 @@ module AlterDatabase
       when 'd'
         delete_from_database
       else
-        puts 'Not a valid command, please re-enter'
+        Input.puts 'Not a valid command, please re-enter'
     end
   end
 
