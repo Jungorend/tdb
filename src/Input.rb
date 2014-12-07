@@ -20,6 +20,8 @@ module Input
   end
 
   def self.read_input(message='TDB')
+    previous_tab = 0 # This checks whether the last button pressed was tab
+    tab_uncompleted_word = "" # This is the word prior to a full tab
     pointer = @history.length - 1
     @message = message + '>'
     Curses.addstr("#{@message} ")
@@ -27,29 +29,40 @@ module Input
     until result.include? "\n" or result.include? "\r"
       character = Curses.getch
       if character.ord == 9 # Tab
-        word = autocomplete(result.split[-1])
-        result = result.split[0..-2].join(' ')
-        if result == ''
-          if word == ''
-            result = ''
-          else
-            result = word + ' '
-          end
+        previous_tab -= 1
+        if previous_tab == -1
+          word = autocomplete(result.split[-1])
         else
-          result = result + ' ' + word + ' '
+          word = autocomplete(tab_uncompleted_word)
+        end
+        result = result.split[0..-2].join(' ')
+        if word.nil? or word[previous_tab].nil?
+          result = result
+        elsif result == ''
+          result = word[previous_tab] + ' '
+        else
+          result = result + ' ' + word[previous_tab] + ' '
         end
       elsif character.ord == 8 or character.ord == 263 # Backspace // 263 is Backspace in the curses.h special function keys
+        previous_tab = 0
         result.chop!
+        tab_uncompleted_word = result
       elsif character.ord == Curses::KEY_UP
+        previous_tab = 0
         result = @history[pointer]
+        tab_uncompleted_word = result
         pointer -= 1
       elsif character.ord == Curses::KEY_DOWN
+        previous_tab = 0
         if @history[pointer+1]
           result = @history[pointer+1]
+          tab_uncompleted_word = result
           pointer += 1
         end
       else
+        previous_tab = 0
         result << character
+        tab_uncompleted_word = result
       end
       Curses.clrtoeol
       Curses.setpos(@y, 0)
@@ -71,10 +84,10 @@ module Input
 
   def self.autocomplete(result)
     tags = add_to_tags(SqlHandling.get_all_tags)
-    out = ''
+    out = Array.new
     tags.each do |tag|
       if tag[0] =~ /^#{result}.*/
-        out = tag[0] + ' '
+        out << "#{tag[0]} "
       end
     end
     out
