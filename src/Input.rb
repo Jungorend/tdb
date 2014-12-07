@@ -37,7 +37,9 @@ module Input
         end
         result = result.split[0..-2].join(' ')
         if word.nil? or word[previous_tab].nil?
-          result = result
+          if result != ''
+            result = result + ' '
+          end
         elsif result == ''
           result = word[previous_tab] + ' '
         else
@@ -46,23 +48,23 @@ module Input
       elsif character.ord == 8 or character.ord == 263 # Backspace // 263 is Backspace in the curses.h special function keys
         previous_tab = 0
         result.chop!
-        tab_uncompleted_word = result
+        tab_uncompleted_word = result.split(' ')[-1]
       elsif character.ord == Curses::KEY_UP
         previous_tab = 0
         result = @history[pointer]
-        tab_uncompleted_word = result
+        tab_uncompleted_word = result.split(' ')[-1]
         pointer -= 1
       elsif character.ord == Curses::KEY_DOWN
         previous_tab = 0
         if @history[pointer+1]
           result = @history[pointer+1]
-          tab_uncompleted_word = result
+          tab_uncompleted_word = result.split(' ')[-1]
           pointer += 1
         end
       else
         previous_tab = 0
         result << character
-        tab_uncompleted_word = result
+        tab_uncompleted_word = result.split(' ')[-1]
       end
       Curses.clrtoeol
       Curses.setpos(@y, 0)

@@ -18,6 +18,7 @@ module Configuration
 
   if @configuration['windows']
     require 'win32/shortcut'
+    include Win32
   end
 
   def self.config
