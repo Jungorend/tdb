@@ -56,7 +56,7 @@ Explanation of the options:
 - database location: This is the actual database file. If none exists, it will create one the first time the program is run.
 - new files: This is the directory to put new files in that you wish to add to the database.
 
-Following this setup, please be sure to actually create the directories listed in the configuration. The database will be initialized on first boot. By default, these would be sort/, watch/, db/, deleted/, dups/. Nothing needs to be placed in them.
+When run, all directories will be created automatically.
 
 #### Windows Example Configuration File:
 ```
@@ -109,3 +109,4 @@ Gems:
 - Logging?
 - That other update method should either be removed or improved and documented
 - Convert Directory likewise should no longer be hard-coded in alterdatabase
+- Allow ignored and parsed english to be updated from the program

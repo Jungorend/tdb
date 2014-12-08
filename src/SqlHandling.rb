@@ -8,20 +8,13 @@ module SqlHandling
   $table = 'filetags'
   $filename = 'filename'
 
-  unless File.exists? @config['database location']
-    require_relative 'Initializer'
-    Initializer.create_new_database
-  end
-
-  $database = SQLite3::Database.new("#{@config['database location']}")
-  $database.execute('PRAGMA foreign_keys = on')
-
-  # The parser variables
-  $english_to_delete = Array.new
-  $english_to_parse = Hash.new
-
-  def self.update_parser
+  def self.initialize
     begin
+      $database = SQLite3::Database.new("#{@config['database location']}") 
+      $database.execute('PRAGMA foreign_keys = ON')  # Ensure no duplicates
+
+      # This updates the current variables based on the sqlite table. as these
+      # changes are only made outside the program, they're only checked on load
       $english_to_delete = $database.execute('SELECT word FROM ignored_english')
       $english_to_delete.map! { |x| x[0] }
 

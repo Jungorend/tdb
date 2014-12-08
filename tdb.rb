@@ -9,10 +9,13 @@ require_relative 'src/SqlHandling'
 require_relative 'src/AlterDatabase'
 require_relative 'src/Configuration'
 require_relative 'src/Input'
+require_relative 'src/Initializer'
+
+Initializer.do_your_thing
 
 Input.init do
 
-  SqlHandling.update_parser
+  SqlHandling.initialize
 
   while true
     input = Input.read_input

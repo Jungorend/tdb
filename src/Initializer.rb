@@ -4,6 +4,19 @@ require 'sqlite3'
 module Initializer
   @config = Configuration.config
 
+  def self.do_your_thing
+    unless File.exists? @config['database location']
+      create_new_database
+    end
+    directories_to_check = ['output directory', 'database directory', 'new files', 'deleted directory', 'potential duplicates']
+    directories_to_check.each do |directory|
+      unless File.exists? @config[directory]
+        Dir.mkdir @config[directory]
+      end
+    end
+  end
+
+
   def self.create_new_database
     @database = SQLite3::Database.new("#{@config['database location']}")
     @database.execute('PRAGMA foreign_keys = on')
