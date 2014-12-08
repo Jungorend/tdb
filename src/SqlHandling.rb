@@ -7,6 +7,8 @@ module SqlHandling
   @convert_dir = Dir.pwd + '/' + 'to convert'
   $table = 'filetags'
   $filename = 'filename'
+  $english_to_parse = Hash.new
+  $english_to_delete = Array.new
 
   def self.initialize
     begin
@@ -312,6 +314,21 @@ module SqlHandling
       rescue
         exit
       end
+    end
+  end
+
+  def self.add_language word, replacement_word=nil
+    if replacement_word.nil?
+      statement = "INSERT INTO ignored_english VALUES (\"#{word}\")"
+    else
+      type = get_type(word)
+      statement = "INSERT INTO parsed_english (word, replacement_word, type) VALUES ('#{replacement_word}', '#{word}', '#{type}')"
+    end
+
+    begin
+      $database.execute(statement)
+    rescue
+      exit
     end
   end
 end

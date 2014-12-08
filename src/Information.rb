@@ -19,6 +19,7 @@ module Information
       'd - Remove from database everything in the to_delete folder. The files remain in the',
       "\tto_delete folder for safety.",
       'i - Create new tags for use in the database',
+      'l - Add words you want to be ignored, or words you want to substitute for tags',
       'c [query] - This creates copies of all the files in the watch directory rather than',
       "\tshortcuts.",
       'q - quit',

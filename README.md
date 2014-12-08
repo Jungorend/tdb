@@ -49,7 +49,7 @@ in the program to read how to use it. Then open up the config.yml file to set wh
 Explanation of the options:
 - windows: true or false. Otherwise, linux is assumed. Affects the file endings and dividers.
 - internal structure: true or false. If false, all directories need to have absolute paths. Otherwise this assumes they are within the base directory
-- base directory: This is the central directory all the other folders are stored, assuming internal structure is true. If you remove this from your config, it will default to the current working directory when you run the program.
+- base directory: This is the central directory all the other folders are stored, assuming internal structure is true. If you remove this from your config, it will default to the current working directory when you run the program. If you keep it, you can use the same database regardless of where you call the program.
 - media viewer: What to run the media against. Music player, video player, image viewer...
 - output directory: This is where the results of a query are stored
 - database directory: All files contained in the database are stored here
@@ -109,4 +109,3 @@ Gems:
 - Logging?
 - That other update method should either be removed or improved and documented
 - Convert Directory likewise should no longer be hard-coded in alterdatabase
-- Allow ignored and parsed english to be updated from the program

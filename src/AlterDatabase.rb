@@ -16,6 +16,8 @@ module AlterDatabase
         update
       when 'i'
         insert_tags
+      when 'l'
+        add_language
       when 'd'
         delete_from_database
       else
@@ -32,6 +34,22 @@ module AlterDatabase
           SqlHandling.insert_to_database(type, tagname, file)
         end
       end
+    end
+  end
+
+  def self.add_language
+    type = Input.read_input 'Would you like to add an \'ignored\' or \'parsed\' word?'
+    type.chomp!
+    if type =~ /i/i
+      word = Input.read_input 'What is the word?'
+      word.chomp!
+      SqlHandling.add_language(word)
+    else
+      word = Input.read_input 'What is the existing word?'
+      replacement_word = Input.read_input 'What is the word you would like to use as a replacement?'
+      word.chomp!
+      replacement_word.chomp!
+      SqlHandling.add_language(word, replacement_word)
     end
   end
 
