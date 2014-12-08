@@ -52,7 +52,9 @@ module AlterDatabase
     #we need to copy it to the database and delete the original.
     files.each do |file|
       SqlHandling.insert_into_file_table(file) unless SqlHandling.file_in_database? file
-      unless File.exists? "#{@config['database directory']}/#{file}"
+      if File.exists? "#{@config['database directory']}/#{file}"
+        FileUtils::cp "#{@config['new files']}/#{file}", "#{@config['potential duplicates']}/#{file}"
+      else
         FileUtils::cp "#{@config['new files']}/#{file}", "#{@config['database directory']}/#{file}"
       end
       array_of_file = Array.new

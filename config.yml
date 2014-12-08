@@ -8,3 +8,4 @@ database directory: db
 database location: database.db
 new files: sort
 deleted directory: deleted
+potential duplicates: dups
