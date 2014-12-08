@@ -24,7 +24,6 @@ module Configuration
 
   if @configuration['windows']
     require 'win32ole'
-    include Win32
   end
 
   def self.config
