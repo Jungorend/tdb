@@ -1,6 +1,5 @@
 ---
 windows: false
-base directory: /home/Jungy/tdb
 internal structure: true
 media viewer: eog
 output directory: watch

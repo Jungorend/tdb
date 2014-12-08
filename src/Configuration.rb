@@ -5,8 +5,12 @@ require 'fileutils'
 module Configuration
   @configuration = Hash.new
 
-  @configuration = YAML::load(File.open( 'config.yml' ))
+  directory = File.dirname(__FILE__)
+  @configuration = YAML::load(File.open( "#{directory}/../config.yml" ))
 
+  if @configuration['base directory'].nil?
+    @configuration['base directory'] = Dir.pwd
+  end
 
   # From here everything is automatic
   if @configuration['internal structure']
@@ -15,6 +19,7 @@ module Configuration
     @configuration['database location'] = @configuration['base directory'] + '/' + @configuration['database location']
     @configuration['new files'] = @configuration['base directory'] + '/' + @configuration['new files']
     @configuration['deleted directory'] = @configuration['base directory'] + '/' + @configuration['deleted directory']
+    @configuration['potential duplicates'] = @configuration['base directory'] + '/' + @configuration['potential duplicates']
   end
 
   if @configuration['windows']
