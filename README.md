@@ -1,49 +1,67 @@
 TDB
 ===
 
-TDB is intended for storing and requesting media files. It lets you organize media based on the qualities you associate with it, and provide you the files that meets your requirements.
+TDB is a tag-based media organizer. Each file is provided as many or as few 'tags' as you would like to identify it. For example, a song could be 'complextro', 'orchestral', 'folk', 'latin',
+of the 'genre' type. It could also be sung by 'ella_fitzgerald' and 'louis_armstrong'. 
 
-Features include:
-* laziest programmed tab-completion that still mostly works 
-* the ability to provide synonyms and ignored words for more pleasing english grammar but no extra functionality
-* file safety assuming you don't close the program while updating. But who would do that.
-* written by a terrible programmer, so the code is probably simple. (Feedback is welcome however)
+With all media tagged, you can then assemble a collection based on the particular theme you wish to use, and it will be provided to the media viewer of your choice.
 
 ### Sample Usage
 
 Let's assume you use this for pictures. Example query and potential relevant tags:
 ```
- only frank at kanazawa eating pizza or frank with others cycling in Munich
+only frank at kanazawa eating pizza or frank with others cycling in Munich
 ```
 This would create shortcuts to all the pictures in the database that met one of these two requirements in a random order. It then starts the appropriate media viewer on the first image allowing them to be viewed.
-Here's a breakdown:
 
-#### Hypothetical Tags:
-- Frank of type *friend*
-- Kanazawa of type *city*
-- eat cycle of type *action*
-- pizza of type *points_of_interest*
+Only is built into tdb and ensures that 'frank' is the only tag of his type (say, 'friends'). or is also, which lets you chain queries.
 
-The program reads in these tags and finds all images that match the combination we see. If a picture matches all the criteria, it is included.
+Special words include:
+-only
+-or
+-not
+-others
 
-*only* and others are keywords that exclude or require that more than one tag of the same type be in the picture. So 'only frank' ensures that no pictures will be included that have others in type *friend*.
-
-#### ignored words:
+#### Adding your own language constructs:
+In the prior example,
 - at
 - with
 - in
+add nothing to the query but make it nicer to read or use. Any word you like can be added as a word to just be ignored. Ignored words can be autocompleted same as any other tag.
 
-would be included in the *ignored_english* table of the database. This means that they would be ignored by the program and included for fluff.
+You can also have words to represent others, to make things easier. Depending on the context from the prior example, it makes more sense to say *eating* instead of the original
+tag, *eat*. If you type eating it will use the eat tag.
+===
 
-Likewise, there would be two records for cycling and eating which link back to our base tags of eat and cycle, allowing us to type whichever feels more convenient at the time.
+## Getting started
 
-Both the *ignored_words* and *parsed_words* records don't yet have a way to be modified from the program. You must use sqlite to add entries. Sorry. :(
+### Requirements
 
-Honestly, I recommend typing
+- Ruby 1.9 or greater
+
+Gems:
+- sqlite3
+- curses
+- win32-shortcut (if windows)
+
+### Setup
+
+If you would like to adjust where everything is, you may want to first edit *config.yml* in the base directory. An explanation of everything in the config is below.
+Once you have the gems and configuration set, run tdb.rb. This will create all the necessary files.
+
+Before inserting any pictures, it may be useful to know what you expect to tag them as. Type *i* and then enter in a few tags and types. Once you are ready, insert
+any media you want into the *new files* directory (default: sort/). Then, press the *u* key. one of the files will be displayed in the media viewer of your choice. A shortcut
+will be in the *output directory* directory (default: watch/) additionally. Type in any tags you wish for that file, and then press enter. The next file will be presented, and so on.
+At any time you can stop by just typing 'q' instead.
+
+At this point, any files you have inserted can now be queried. From the top level menu just type the query you would like!
+
+
+At this point, however, I would recommend typing
 ```
 ?
 ```
-in the program to read how to use it. Then open up the config.yml file to set where you want everything. For example, on windows, you don't want to use eye of gnome, so you may want to set the media viewer to your prefered media viewer.
+in the program for a more specific description on what can be done.
 
 ### Configuration File Explanation And Setup
 Explanation of the options:
@@ -87,20 +105,6 @@ new files: sort
 deleted directory: deleted
 potential duplicates: dups
 ```
-
-For music/video, I have not found a player I like which accepts shortcuts by the command line, so no
-examples there.
-
-### Requirements
-
-- Ruby 1.9 or greater
-- sqlite3
-
-Gems:
-- sqlite3
-- curses
-- win32-shortcut (if windows)
-
 
 ### TODO
 

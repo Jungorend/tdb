@@ -37,7 +37,7 @@ module Information
       'not [tag] - This will include all files not of tag',
       'or - Connects to separate queries together and combines result',
       '',
-      'Tab autocompletes words, arrow keys move through previous queries',
+      'Tab autocompletes words, up and down arrow keys let you choose previous queries',
       'Any words in the ignored_english table can be autocompleted and do not affect the query',
       'Any words in the parsed_english table can be substitude in place of the actual tag',
       'The only other valid input are tags'
