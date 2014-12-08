@@ -1,9 +1,10 @@
 ---
 windows: false
-base directory: /path/to/folder/tdb
+base directory: /home/Jungy/tdb
 internal structure: true
 media viewer: eog
 output directory: watch
 database directory: db
 database location: database.db
 new files: sort
+deleted directory: deleted

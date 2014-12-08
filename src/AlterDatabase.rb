@@ -96,9 +96,9 @@ module AlterDatabase
   end
 
   def self.delete_from_database
-    files = Dir["#{@base_dir}/to delete/*"]
+    files = Dir["#{@config['deleted directory']}/*"]
     files.map! { |file| file.split('/')[-1] }
-    puts files
+    Input.puts files
     SqlHandling.remove_files(files)
   end
 end

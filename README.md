@@ -45,7 +45,7 @@ Honestly, I recommend typing
 ```
 in the program to read how to use it. Then open up the config.yml file to set where you want everything. For example, on windows, you don't want to use eye of gnome, so you may want to set the media viewer to your prefered media viewer.
 
-### Configuration File Explanation
+### Configuration File Explanation And Setup
 > Explanation of the options:
 - windows: true or false. Otherwise, linux is assumed. Affects the file endings and dividers.
 - internal structure: true or false. If false, all directories need to have absolute paths. Otherwise this assumes they are within the base directory
@@ -54,6 +54,8 @@ in the program to read how to use it. Then open up the config.yml file to set wh
 - database directory: All files contained in the database are stored here
 - database location: This is the actual database file. If none exists, it will create one the first time the program is run.
 - new files: This is the directory to put new files in that you wish to add to the database.
+
+Following this setup, please be sure to actually create the directories listed in the configuration. The database will be initialized on first boot. By default, these would be sort/, watch/, db/, deleted/. Nothing needs to be placed in them.
 
 #### Windows Example Configuration File:
 ```
@@ -66,6 +68,7 @@ output directory: watch
 database directory: db
 database location: database.db
 new files: sort
+deleted directory: deleted
 ```
 
 #### Ubuntu Example Configuration File:
@@ -79,6 +82,7 @@ output directory: watch
 database directory: db
 database location: database.db
 new files: sort
+deleted directory: deleted
 ```
 
 For music/video, I have not found a player I like which accepts shortcuts by the command line, so no
@@ -93,3 +97,13 @@ examples there.
 - sqlite3
 - curses
 - win32-shortcut (if windows)
+
+
+### TODO
+
+- Random Selection tag improvement
+- Delete Folder add to configuration
+- Logging?
+- duplication folder add to configuration
+- That other update method should either be removed or improved and documented
+- Convert Directory likewise should no longer be hard-coded in alterdatabase

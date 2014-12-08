@@ -14,6 +14,7 @@ module Configuration
     @configuration['database directory'] = @configuration['base directory'] + '/' + @configuration['database directory']
     @configuration['database location'] = @configuration['base directory'] + '/' + @configuration['database location']
     @configuration['new files'] = @configuration['base directory'] + '/' + @configuration['new files']
+    @configuration['deleted directory'] = @configuration['base directory'] + '/' + @configuration['deleted directory']
   end
 
   if @configuration['windows']
