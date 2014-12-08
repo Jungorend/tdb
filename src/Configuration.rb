@@ -23,7 +23,7 @@ module Configuration
   end
 
   if @configuration['windows']
-    require 'win32/shortcut'
+    require 'win32ole'
     include Win32
   end
 
@@ -33,10 +33,11 @@ module Configuration
 
   def self.create_shortcut(source, destination)
     if @configuration['windows']
-      Shortcut.new(destination + '.lnk') do |s|
-        s.path = source
-        s.show_cmd = Shortcut::SHOWNORMAL
-      end
+      destination = destination + '.lnk'
+      shortcut = WIN32OLE.new('WScript.Shell').CreateShortcut(destination)
+      shortcut.TargetPath = source
+      shortcut.WindowStyle = 1 # SHOWNORMAL
+      shortcut.save
     else
       File.symlink(source, destination)
     end

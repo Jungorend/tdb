@@ -36,12 +36,11 @@ Getting started
 
 ### Requirements
 
-- Ruby 1.9 or greater
+- Ruby 1.9 or greater (I use require_relative)
+- sqlite3 (needed for sqlite3 gem)
 
 Gems:
 - sqlite3
-- curses
-- win32-shortcut (if windows)
 
 ### Setup
 
