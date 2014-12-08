@@ -35,13 +35,6 @@ module AlterDatabase
     end
   end
 
-  #TODO: Check if still used anywhere
-  def self.list_tag
-    input = Input.read_input 'Enter the type'
-    character = SqlHandling.show_all_in_field input.chomp!
-    Input.print_as_table character
-  end
-
   # This allows new characters and similar to be created.
   def self.insert_tags
     tag = Input.read_input 'Please enter the tag'
