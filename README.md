@@ -14,13 +14,13 @@ only frank at kanazawa eating pizza or frank with others cycling in Munich
 ```
 This would create shortcuts to all the pictures in the database that met one of these two requirements in a random order. It then starts the appropriate media viewer on the first image allowing them to be viewed.
 
-Only is built into tdb and ensures that 'frank' is the only tag of his type (say, 'friends'). or is also, which lets you chain queries.
+*only* is built into tdb and ensures that 'frank' is the only tag of his type (say, 'friends'). or is also, which lets you chain queries.
 
 Special words include:
--only
--or
--not
--others
+- only
+- or
+- not
+- others
 
 #### Adding your own language constructs:
 In the prior example,
@@ -29,11 +29,10 @@ In the prior example,
 - in
 add nothing to the query but make it nicer to read or use. Any word you like can be added as a word to just be ignored. Ignored words can be autocompleted same as any other tag.
 
-You can also have words to represent others, to make things easier. Depending on the context from the prior example, it makes more sense to say *eating* instead of the original
-tag, *eat*. If you type eating it will use the eat tag.
-===
+You can also have words to represent others, to make things easier. Depending on the context from the prior example, it makes more sense to say *eating* instead of the original tag, *eat*. If you type eating it will use the eat tag.
 
-## Getting started
+Getting started
+===
 
 ### Requirements
 
@@ -46,16 +45,13 @@ Gems:
 
 ### Setup
 
-If you would like to adjust where everything is, you may want to first edit *config.yml* in the base directory. An explanation of everything in the config is below.
-Once you have the gems and configuration set, run tdb.rb. This will create all the necessary files.
-
-Before inserting any pictures, it may be useful to know what you expect to tag them as. Type *i* and then enter in a few tags and types. Once you are ready, insert
-any media you want into the *new files* directory (default: sort/). Then, press the *u* key. one of the files will be displayed in the media viewer of your choice. A shortcut
-will be in the *output directory* directory (default: watch/) additionally. Type in any tags you wish for that file, and then press enter. The next file will be presented, and so on.
-At any time you can stop by just typing 'q' instead.
+- Edit *config.yml* to preference. An explanation is below.
+- Run tdb.rb. This will create all the files you need.
+- Type *i* and then enter in a few tags and types. 
+- Once you are ready, insert any media you want into the *new files* directory (default: sort/). Then, press the *u* key. one of the files will be displayed in the media viewer of your choice.
+- Type any tags you wish for that file, then press enter. The next file will be presented, and so on. At any time you can stop by just typing 'q' instead.
 
 At this point, any files you have inserted can now be queried. From the top level menu just type the query you would like!
-
 
 At this point, however, I would recommend typing
 ```
